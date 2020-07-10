@@ -1,0 +1,68 @@
+# Default values for easynvest-default-dotnet-app.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+fullnameOverride: collateral
+
+environment: Homolog
+
+replicaCount: 2
+
+image:
+  repository: 827461279864.dkr.ecr.sa-east-1.amazonaws.com/RIPE
+  tag: stable
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+hpa:
+  enabled: true
+  scaleTargetRef:
+    apiVersion: apps/v1beta1
+    kind: Deployment
+  maxReplicas: 3
+  minReplicas: 2
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        targetAverageUtilization: 70
+
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: internal-nginx
+  paths: [
+    /collateral
+  ]
+  hosts:
+    - apis-internal.hom.easynvest.io
+  tls: []
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 200Mi
+
+nodeSelector: {}
+
+readinessProbe:
+  failureThreshold: 3
+  httpGet:
+    path: /ping
+    port: 80
+    scheme: HTTP
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 60
+
+tolerations: []
+
+affinity: {}

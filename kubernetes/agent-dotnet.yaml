@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dotnet
+  labels:
+    app: dotnet
+spec:
+  containers:
+    - name: dotnet
+      image: 827461279864.dkr.ecr.sa-east-1.amazonaws.com/jenkins.dotnet:3.1.28
+      tty: true
+      command:
+        - /bin/sh
+      volumeMounts:
+        - name: dockersock
+          mountPath: "/var/run/docker.sock"
+  volumes:
+    - name: dockersock
+      hostPath:
+        path: /var/run/docker.sock

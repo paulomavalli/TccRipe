@@ -1,0 +1,9 @@
+C:\Users\paulo.iteris\source\repos\Ripev2\src\RIPE.CrossCutting\bin\Debug\netcoreapp3.1\RIPE.CrossCutting.deps.json
+C:\Users\paulo.iteris\source\repos\Ripev2\src\RIPE.CrossCutting\bin\Debug\netcoreapp3.1\RIPE.CrossCutting.dll
+C:\Users\paulo.iteris\source\repos\Ripev2\src\RIPE.CrossCutting\bin\Debug\netcoreapp3.1\RIPE.CrossCutting.pdb
+C:\Users\paulo.iteris\source\repos\Ripev2\src\RIPE.CrossCutting\obj\Debug\netcoreapp3.1\RIPE.CrossCutting.csproj.CoreCompileInputs.cache
+C:\Users\paulo.iteris\source\repos\Ripev2\src\RIPE.CrossCutting\obj\Debug\netcoreapp3.1\RIPE.CrossCutting.AssemblyInfoInputs.cache
+C:\Users\paulo.iteris\source\repos\Ripev2\src\RIPE.CrossCutting\obj\Debug\netcoreapp3.1\RIPE.CrossCutting.AssemblyInfo.cs
+C:\Users\paulo.iteris\source\repos\Ripev2\src\RIPE.CrossCutting\obj\Debug\netcoreapp3.1\RIPE.CrossCutting.dll
+C:\Users\paulo.iteris\source\repos\Ripev2\src\RIPE.CrossCutting\obj\Debug\netcoreapp3.1\RIPE.CrossCutting.pdb
+C:\Users\paulo.iteris\source\repos\Ripev2\src\RIPE.CrossCutting\obj\Debug\netcoreapp3.1\RIPE.CrossCutting.csprojAssemblyReference.cache
