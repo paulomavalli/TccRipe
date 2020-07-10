@@ -1,0 +1,93 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{67B37C78-DA36-4281-B519-F280FB1081F3}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		Dockerfile-jenkins = Dockerfile-jenkins
+		Jenkinsfile = Jenkinsfile
+		Makefile = Makefile
+		NuGet.config = NuGet.config
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kubernetes", "kubernetes", "{C7403A54-74E6-44E6-A982-3E2CD9BA7215}"
+	ProjectSection(SolutionItems) = preProject
+		kubernetes\agent-dotnet.yaml = kubernetes\agent-dotnet.yaml
+		kubernetes\development.yaml = kubernetes\development.yaml
+		kubernetes\homolog.yaml = kubernetes\homolog.yaml
+		kubernetes\production.yaml = kubernetes\production.yaml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RIPE.Tests", "test\RIPE.Tests\RIPE.Tests.csproj", "{F995F65C-12FD-4257-91F7-487AAE25B1FA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{F43A66DA-5E64-4AFB-9EBD-0DF22430D7CF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RIPE.API", "src\RIPE.API\RIPE.API.csproj", "{0DE43F31-E2E6-4A4F-BD67-101AE43ED2AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B54E8179-A0E8-4C33-92C3-8DA529BDAF8A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RIPE.IoC", "src\RIPE.IoC\RIPE.IoC.csproj", "{C0FB752B-2D9C-4A2B-98DD-0E8420246918}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RIPE.CrossCutting", "src\RIPE.CrossCutting\RIPE.CrossCutting.csproj", "{C7A747AE-B3C9-4CD4-8581-060735A0EF07}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RIPE.Application", "src\RIPE.Application\RIPE.Application.csproj", "{F41FB8C9-E574-4E4C-AD1E-BEAEE9B396E6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RIPE.Domain", "src\RIPE.Domain\RIPE.Domain.csproj", "{31396485-1E85-4FA8-85C1-616840B05F50}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RIPE.Data", "src\RIPE.Data\RIPE.Data.csproj", "{B432032B-06C9-48A1-AE21-F167BB502B25}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F995F65C-12FD-4257-91F7-487AAE25B1FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F995F65C-12FD-4257-91F7-487AAE25B1FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F995F65C-12FD-4257-91F7-487AAE25B1FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F995F65C-12FD-4257-91F7-487AAE25B1FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DE43F31-E2E6-4A4F-BD67-101AE43ED2AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DE43F31-E2E6-4A4F-BD67-101AE43ED2AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DE43F31-E2E6-4A4F-BD67-101AE43ED2AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DE43F31-E2E6-4A4F-BD67-101AE43ED2AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0FB752B-2D9C-4A2B-98DD-0E8420246918}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0FB752B-2D9C-4A2B-98DD-0E8420246918}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0FB752B-2D9C-4A2B-98DD-0E8420246918}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0FB752B-2D9C-4A2B-98DD-0E8420246918}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7A747AE-B3C9-4CD4-8581-060735A0EF07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7A747AE-B3C9-4CD4-8581-060735A0EF07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7A747AE-B3C9-4CD4-8581-060735A0EF07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7A747AE-B3C9-4CD4-8581-060735A0EF07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F41FB8C9-E574-4E4C-AD1E-BEAEE9B396E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F41FB8C9-E574-4E4C-AD1E-BEAEE9B396E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F41FB8C9-E574-4E4C-AD1E-BEAEE9B396E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F41FB8C9-E574-4E4C-AD1E-BEAEE9B396E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31396485-1E85-4FA8-85C1-616840B05F50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31396485-1E85-4FA8-85C1-616840B05F50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31396485-1E85-4FA8-85C1-616840B05F50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31396485-1E85-4FA8-85C1-616840B05F50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B432032B-06C9-48A1-AE21-F167BB502B25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B432032B-06C9-48A1-AE21-F167BB502B25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B432032B-06C9-48A1-AE21-F167BB502B25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B432032B-06C9-48A1-AE21-F167BB502B25}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C7403A54-74E6-44E6-A982-3E2CD9BA7215} = {67B37C78-DA36-4281-B519-F280FB1081F3}
+		{F995F65C-12FD-4257-91F7-487AAE25B1FA} = {F43A66DA-5E64-4AFB-9EBD-0DF22430D7CF}
+		{0DE43F31-E2E6-4A4F-BD67-101AE43ED2AD} = {B54E8179-A0E8-4C33-92C3-8DA529BDAF8A}
+		{C0FB752B-2D9C-4A2B-98DD-0E8420246918} = {B54E8179-A0E8-4C33-92C3-8DA529BDAF8A}
+		{C7A747AE-B3C9-4CD4-8581-060735A0EF07} = {B54E8179-A0E8-4C33-92C3-8DA529BDAF8A}
+		{F41FB8C9-E574-4E4C-AD1E-BEAEE9B396E6} = {B54E8179-A0E8-4C33-92C3-8DA529BDAF8A}
+		{31396485-1E85-4FA8-85C1-616840B05F50} = {B54E8179-A0E8-4C33-92C3-8DA529BDAF8A}
+		{B432032B-06C9-48A1-AE21-F167BB502B25} = {B54E8179-A0E8-4C33-92C3-8DA529BDAF8A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B445CB71-58D2-4074-8B2C-F25DB8FE7035}
+	EndGlobalSection
+EndGlobal
