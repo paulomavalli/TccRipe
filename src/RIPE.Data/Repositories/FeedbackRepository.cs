@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace RIPE.Data.Repositories
 {
-    public class CollateralPriorityRepository : ICollateralPriorityRepository
+    public class FeedbackRepository : ICollateralPriorityRepository
     {
         private readonly ConnectionStringOptions _connectionStringOptions;
         private readonly ILogger _logger;
 
-        public CollateralPriorityRepository(ILogger<CollateralPriorityRepository> logger, IOptions<ConnectionStringOptions> connectionStringOptions)
+        public FeedbackRepository(ILogger<FeedbackRepository> logger, IOptions<ConnectionStringOptions> connectionStringOptions)
         {
             _logger = logger;
             _connectionStringOptions = connectionStringOptions.Value;

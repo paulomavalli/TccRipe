@@ -9,7 +9,7 @@ namespace RIPE.IoC
         public static IServiceCollection RegisterRepositories(this IServiceCollection services)
         {
             services.AddTransient<IRipeRepository, RipeRepository>();
-            services.AddTransient<ICollateralPriorityRepository, CollateralPriorityRepository>();
+            services.AddTransient<ICollateralPriorityRepository, FeedbackRepository>();
             return services;
         }
     }
