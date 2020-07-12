@@ -1,5 +1,5 @@
-﻿using RIPE.CrossCutting.Extensions;
-using FluentAssertions;
+﻿using FluentAssertions;
+using RIPE.CrossCutting.Extensions;
 using System.ComponentModel;
 using Xunit;
 

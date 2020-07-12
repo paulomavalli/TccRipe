@@ -11,7 +11,7 @@
             SecurityId = securityId;
             SecurityType = securityType;
             Quantity = quantity;
-           
+
         }
 
         public string CollateralId { get; set; }

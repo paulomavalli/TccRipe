@@ -39,16 +39,16 @@ namespace RIPE.Tests.Fake
 
         public static ProductRequest GetFundsProduct()
         {
-            return new ProductRequest("productId", "FUNDOS", "Ações", (decimal)0.5, 1000, new DateTime(2025,04,15));
+            return new ProductRequest("productId", "FUNDOS", "Ações", (decimal)0.5, 1000, new DateTime(2025, 04, 15));
         }
         public static ProductRequest GetTreasuryDirectProduct()
         {
-            return new ProductRequest("productId", "TD", "SELIC", (decimal)0.5, 1000, new DateTime(2025,04,15));
+            return new ProductRequest("productId", "TD", "SELIC", (decimal)0.5, 1000, new DateTime(2025, 04, 15));
         }
 
         public static ProductRequest GetFixedIncomeProduct()
         {
-            return new ProductRequest("productId", "CDB", "VENCIMENTO", 3, 2400, new DateTime(2025,04,15));
+            return new ProductRequest("productId", "CDB", "VENCIMENTO", 3, 2400, new DateTime(2025, 04, 15));
         }
 
         public static List<ProductRequest> GetNecessaryProducts()

@@ -1,5 +1,5 @@
-﻿using RIPE.Application.Responses;
-using MediatR;
+﻿using MediatR;
+using RIPE.Application.Responses;
 using RIPE.Domain.Domains.Questions;
 using System.Collections.Generic;
 

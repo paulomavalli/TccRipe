@@ -1,15 +1,14 @@
-﻿using RIPE.Application.Responses;
+﻿using Easynvest.Ops;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using RIPE.Application.Command;
+using RIPE.Application.Interfaces.Repository;
+using RIPE.Application.Responses;
+using RIPE.Domain.Domains.Feedback;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System;
-using Easynvest.Ops;
-using Microsoft.AspNetCore.Http;
-using RIPE.Application.Command;
-using RIPE.CrossCutting.Extensions;
-using RIPE.Domain.Domains.Feedback;
-using RIPE.Application.Interfaces.Repository;
 
 namespace RIPE.Application.CommandHandlers
 {
@@ -36,29 +35,26 @@ namespace RIPE.Application.CommandHandlers
             {
                 return Response.Fail("Feedback Command Vazio.");
             }
-            if (string.IsNullOrWhiteSpace(request.FeedbackOrigin))
+            if (string.IsNullOrWhiteSpace(request.Email))
             {
-                return Response.Fail("Feedback Origin Vazio.");
+                return Response.Fail("Email Vazio.");
             }
             if (string.IsNullOrWhiteSpace(request.CustomerFeedback))
             {
                 return Response.Fail("Customer Feedback Vazio.");
             }
 
-            var customerId = request.CustomerId;
-            var customerHash = customerId.GenerateSha256Hash();
-
             try
             {
-                await _feedbackRepository.WriteFeedback(new Feedback(customerId, request.FeedbackOrigin, request.CustomerFeedback, request.SuggestedLimit));
+                await _feedbackRepository.WriteFeedback(new Feedback(request.CustomerFeedback, request.Email));
 
                 return Response.Ok();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"RequestId: {requestId} - Erro ao gravar feedback do cliente {customerHash}");
+                _logger.LogError(ex, $"RequestId: {requestId} - Erro ao gravar feedback do cliente {request.Email}");
                 return Response.Fail(new Error("GenericError",
-                    $"RequestId: {requestId} - Erro ao gravar feedback do cliente {customerHash}",
+                    $"RequestId: {requestId} - Erro ao gravar feedback do cliente {request.Email}",
                     StatusCodes.Status500InternalServerError));
             }
         }

@@ -1,13 +1,12 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using RIPE.Application.Interfaces.Repository;
+using RIPE.Application.Interfaces.Repository.Cache;
 using RIPE.Application.Queries;
 using RIPE.Application.QueryHandlers;
 using RIPE.Application.Responses;
 using RIPE.Domain;
 using RIPE.Domain.Domains;
-using RIPE.Domain.Domains.PriorityAggregate;
 using RIPE.Tests.Fake;
 using System.Collections.Generic;
 using System.Threading;
@@ -18,19 +17,19 @@ namespace RIPE.Tests.Application.QueryHandlers
 {
     public class LoginQueryHandlerTests
     {
-        private readonly IRipeRepository _ripeRepository;
+        //private readonly IRipeRepository _ripeRepository;
         private readonly LoginQueryHandler _handler;
-        private readonly IReportService _reportService;
+        private readonly IReadCacheRepository _readCacheRepository;
+        //  private readonly IReportService _reportService;
 
         public LoginQueryHandlerTests()
         {
-            _ripeRepository = Substitute.For<IRipeRepository>();
+            _readCacheRepository = Substitute.For<IReadCacheRepository>();
             var logger = Substitute.For<ILogger<LoginQueryHandler>>();
-            _reportService = Substitute.For<IReportService>();
 
             _handler = new LoginQueryHandler(logger,
-                                            _ripeRepository,
-                                            _reportService);
+                                            _readCacheRepository
+                                            );
 
         }
 

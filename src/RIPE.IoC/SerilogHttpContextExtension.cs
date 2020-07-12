@@ -1,6 +1,6 @@
-using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Serilog.Enrichers.AspnetcoreHttpcontext;
+using System.Linq;
 
 namespace RIPE.IoC
 {

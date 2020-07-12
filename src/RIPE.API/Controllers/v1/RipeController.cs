@@ -1,14 +1,12 @@
-﻿using RIPE.API.Convention;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using RIPE.API.Convention;
+using RIPE.Application.Command;
 using RIPE.Application.Queries;
 using RIPE.Application.Requests;
 using RIPE.Application.Responses;
-using RIPE.CrossCutting.Extensions;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using RIPE.Application.Command;
 
 namespace RIPE.API.Controllers.v1
 {
@@ -28,7 +26,21 @@ namespace RIPE.API.Controllers.v1
 
         [HttpPost("login")]
         [Authorize]
-        public async Task<ActionResult<Response>> Post([FromBody] LoginRequest userDetails)
+        public async Task<ActionResult<Response>> NewUserPost([FromBody] LoginRequest userDetails)
+        {
+            var request = new ValidateLoginQuery(userDetails.Login, userDetails.Password);
+
+            var response = await _mediator.Send(request);
+
+            if (response.IsFailure) return BadRequest(response);
+            if (response.Value is null) return NoContent();
+
+            return Ok(response.Value);
+        }
+
+        [HttpPost("login")]
+        [Authorize]
+        public async Task<ActionResult<Response>> LoginPost([FromBody] LoginRequest userDetails)
         {
             var request = new ValidateLoginQuery(userDetails.Login, userDetails.Password);
 
@@ -71,7 +83,7 @@ namespace RIPE.API.Controllers.v1
         [Authorize]
         public async Task<IActionResult> Feedback([FromBody] FeedbackRequest feedback)
         {
-            var request = new FeedbackCommand(User.GetCustomerId(), feedback.FeedbackOrigin, feedback.CustomerFeedback, feedback.SuggestedLimit);
+            var request = new FeedbackCommand(feedback.CustomerFeedback, feedback.Email);
 
             var response = await _mediator.Send(request);
             if (response.IsFailure) return BadRequest(response);

@@ -1,7 +1,7 @@
-﻿using RIPE.Application.Responses;
-using MediatR;
-using System.Collections.Generic;
+﻿using MediatR;
+using RIPE.Application.Responses;
 using RIPE.Domain.Domains.Questions;
+using System.Collections.Generic;
 
 namespace RIPE.Application.Queries
 {
@@ -15,6 +15,6 @@ namespace RIPE.Application.Queries
 
         public List<TypeQuestions> CheckBoxes { get; }
 
-        
+
     }
 }

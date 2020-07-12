@@ -2,16 +2,12 @@
 {
     public class Feedback
     {
-        public Feedback(string customerId, string feedbackOrigin, string customerFeedback, decimal? suggestedLimit)
+        public Feedback(string email, string customerFeedback)
         {
-            CustomerId = customerId;
-            FeedbackOrigin = feedbackOrigin;
             CustomerFeedback = customerFeedback;
-            SuggestedLimit = suggestedLimit;
+            Email = email;
         }
-        public string CustomerId { get; }
-        public string FeedbackOrigin { get; }
+        public string Email { get; }
         public string CustomerFeedback { get; }
-        public decimal? SuggestedLimit { get; }
     }
 }

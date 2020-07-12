@@ -1,15 +1,15 @@
 ﻿using Dapper;
-using RIPE.Application.Interfaces.Repository;
-using RIPE.CrossCutting.Options;
-using RIPE.Data.Statements;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MySql.Data.MySqlClient;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System;
+using RIPE.Application.Interfaces.Repository;
+using RIPE.CrossCutting.Options;
+using RIPE.Data.Statements;
 using RIPE.Domain.Domains.Feedback;
 using RIPE.Domain.Domains.Questions;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RIPE.Data.Repositories
 {
@@ -28,7 +28,7 @@ namespace RIPE.Data.Repositories
         {
             await using var conn = new MySqlConnection(_connectionStringOptions.MySQLDbConnection);
             _logger.LogDebug("Consultando Ativos em Garantia do cliente.");
-            return await conn.QueryAsync<Domain.Domains.Collateral>(RipeStatements.GET_COLLATERAL, new {customerId });
+            return await conn.QueryAsync<Domain.Domains.Collateral>(RipeStatements.GET_COLLATERAL, new { customerId });
         }
 
         public async Task<IEnumerable<Domain.Domains.Collateral>> GetCollateralPerSecurityId(string securityId, string customerId)
@@ -45,7 +45,7 @@ namespace RIPE.Data.Repositories
             return await conn.QueryAsync<TypeQuestions>(RipeStatements.GET_COLLATERAL);
         }
 
-        public async Task<bool>WriteFeedback(Feedback feedback)
+        public async Task<bool> WriteFeedback(Feedback feedback)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace RIPE.Data.Repositories
                 _logger.LogDebug("Gravando propostas de parcelamento do cliente.");
 
                 DateTime requestDate = DateTime.Today;
-                await conn.ExecuteAsync(RipeStatements.WRITE_USER,new { login,password, requestDate } );
+                await conn.ExecuteAsync(RipeStatements.WRITE_USER, new { login, password, requestDate });
                 return false;
             }
             catch (Exception ex)

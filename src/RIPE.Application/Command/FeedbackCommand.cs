@@ -1,21 +1,17 @@
-﻿using RIPE.Application.Responses;
-using MediatR;
+﻿using MediatR;
+using RIPE.Application.Responses;
 
 namespace RIPE.Application.Command
 {
-    public class FeedbackCommand: IRequest<Response>
+    public class FeedbackCommand : IRequest<Response>
     {
-        public FeedbackCommand(string customerId, string feedbackOrigin, string customerFeedback, decimal suggestedLimit)
+        public FeedbackCommand(string email, string customerFeedback)
         {
-            CustomerId = customerId;
-            FeedbackOrigin = feedbackOrigin;
+            Email = email;
             CustomerFeedback = customerFeedback;
-            SuggestedLimit = suggestedLimit;
         }
 
-        public string CustomerId { get; }
-        public string FeedbackOrigin { get; }
+        public string Email { get; }
         public string CustomerFeedback { get; }
-        public decimal SuggestedLimit { get; }
     }
 }

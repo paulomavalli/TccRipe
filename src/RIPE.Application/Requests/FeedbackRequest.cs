@@ -3,16 +3,19 @@
 namespace RIPE.Application.Requests
 {
     [ExcludeFromCodeCoverage]
-    public class LoginRequest
+    public class FeedbackRequest
     {
-        public LoginRequest(string login, string password)
+        public FeedbackRequest()
         {
-            Login = login;
-            Password = password;
         }
 
-        public string Login { get; set; }
-        public string Password { get; set; }
+        public FeedbackRequest(string email, string customerFeedback)
+        {
+            Email = email;
+            CustomerFeedback = customerFeedback;
+        }
 
+        public string Email { get; set; }
+        public string CustomerFeedback { get; set; }
     }
 }

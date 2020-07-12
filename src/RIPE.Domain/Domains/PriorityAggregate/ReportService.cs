@@ -68,6 +68,6 @@ namespace RIPE.Domain.Domains.PriorityAggregate
             return necessaryProduct;
 
         }
-  
+
     }
 }

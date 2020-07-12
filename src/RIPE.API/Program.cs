@@ -1,7 +1,7 @@
-using RIPE.IoC;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using RIPE.IoC;
 using Serilog;
 using Serilog.Enrichers.AspnetcoreHttpcontext;
 using Serilog.Events;
@@ -67,4 +67,4 @@ namespace RIPE.API
                 .ReadFrom.Configuration(hostingContext.Configuration);
         }
     }
-}               
+}

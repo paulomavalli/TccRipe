@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace RIPE.CrossCutting
 {
@@ -39,7 +39,7 @@ namespace RIPE.CrossCutting
             };
 
             return httpContext.Response.WriteAsync(JsonSerializer.Serialize(resultObj,
-                new JsonSerializerOptions {WriteIndented = true, IgnoreNullValues = true}));
+                new JsonSerializerOptions { WriteIndented = true, IgnoreNullValues = true }));
         }
     }
 }

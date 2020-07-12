@@ -9,7 +9,7 @@ namespace RIPE.Domain.Domains
 
         }
 
-        public ProductRequest(string securityId, string securityType, string securityDescription, 
+        public ProductRequest(string securityId, string securityType, string securityDescription,
                         decimal quantity, decimal netValue, DateTime? expirationDate)
         {
             SecurityId = securityId;

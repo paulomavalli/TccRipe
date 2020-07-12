@@ -1,9 +1,9 @@
-﻿using RIPE.Application.Responses;
-using MediatR;
+﻿using MediatR;
+using RIPE.Application.Responses;
 
 namespace RIPE.Application.Queries
 {
-    public class SurveyQuery: IRequest<Response<QuestionsResponse>>
+    public class SurveyQuery : IRequest<Response<QuestionsResponse>>
     {
         public SurveyQuery(string validateUser)
         {

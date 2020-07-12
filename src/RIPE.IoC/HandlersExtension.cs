@@ -1,8 +1,8 @@
-using System;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using RIPE.Application.HandlersValidators;
+using System;
 
 namespace RIPE.IoC
 {

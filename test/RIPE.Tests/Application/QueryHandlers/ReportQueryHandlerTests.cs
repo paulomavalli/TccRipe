@@ -1,19 +1,19 @@
-﻿using RIPE.Application.Interfaces.Repository;
+﻿using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using NSubstitute;
+using NSubstitute.ExceptionExtensions;
+using RIPE.Application.Interfaces.Repository;
 using RIPE.Application.Queries;
 using RIPE.Application.QueryHandlers;
 using RIPE.Application.Responses;
 using RIPE.Domain;
+using RIPE.Domain.Domains.Questions;
 using RIPE.Tests.Fake;
-using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using NSubstitute;
-using NSubstitute.ExceptionExtensions;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-using RIPE.Domain.Domains.Questions;
 
 namespace RIPE.Tests.Application.QueryHandlers
 {
@@ -40,7 +40,7 @@ namespace RIPE.Tests.Application.QueryHandlers
             Response<ReportResponse> response = await _handler.Handle(new ReportQuery(checkBoxes), CancellationToken.None);
 
             response.IsSuccess.Should().BeTrue();
-            response.Value.ExceededQuantity.Should().Be(0);
+            response.Value.NivelMaturidade.Should().Be("0");
         }
 
         [Fact]
@@ -52,17 +52,16 @@ namespace RIPE.Tests.Application.QueryHandlers
             Response<ReportResponse> response = await _handler.Handle(new ReportQuery(checkBoxes), CancellationToken.None);
 
             response.IsSuccess.Should().BeTrue();
-            response.Value.ExceededQuantity.Should().Be(0);
+            response.Value.NivelMaturidade.Should().Be("0");
         }
 
         [Fact]
         public async Task ShouldReturnSuccess_AfterHandle_CollateralsLessThanWithdrawalQuantity()
         {
             const string securityId = "12345";
-          //  const decimal securityQuantity = 10000.506M;
-           // const decimal withdrawalQuantity = 6000.342M;
+            //  const decimal securityQuantity = 10000.506M;
+            // const decimal withdrawalQuantity = 6000.342M;
             const decimal quantityInCollateral = 5000.231M;
-            const decimal expected = 1000.07M;
 
             List<RIPE.Domain.Domains.Collateral> collaterals = CollateralFake.GetRealCollateralSameSecurityId(securityId, quantityInCollateral);
             _collateralRepository.GetCollateralPerSecurityId(Arg.Any<string>(), Arg.Any<string>()).Returns(collaterals);
@@ -71,7 +70,7 @@ namespace RIPE.Tests.Application.QueryHandlers
             Response<ReportResponse> response = await _handler.Handle(new ReportQuery(checkBoxes), CancellationToken.None);
 
             response.IsSuccess.Should().BeTrue();
-            response.Value.ExceededQuantity.Should().Be(expected);
+            response.Value.PorcentagemRespostasPositivas.Should().Be("55");
         }
 
         [Fact]

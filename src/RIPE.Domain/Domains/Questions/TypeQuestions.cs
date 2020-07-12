@@ -1,4 +1,6 @@
-﻿namespace RIPE.Domain.Domains.Questions
+﻿using System.Collections.Generic;
+
+namespace RIPE.Domain.Domains.Questions
 {
     public class TypeQuestions
     {
@@ -7,12 +9,15 @@
 
         }
 
-        public TypeQuestions(string collateralId)
+        public TypeQuestions(string typeId, string typeDescription, List<string> questionDescription)
         {
-            CollateralId = collateralId;
-            
+            TypeId = typeId;
+            TypeDescription = typeDescription;
+            QuestionDescription = questionDescription;
         }
 
-        public string CollateralId { get; set; }
+        public string TypeId { get; set; }
+        public string TypeDescription { get; set; }
+        public List<string> QuestionDescription { get; set; }
     }
 }

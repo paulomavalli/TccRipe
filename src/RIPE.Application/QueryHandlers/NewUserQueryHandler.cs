@@ -15,16 +15,16 @@ using System.Threading.Tasks;
 
 namespace RIPE.Application.QueryHandlers
 {
-    public class LoginQueryHandler : IRequestHandler<ValidateLoginQuery, Response<ValidateLoginResponse>>
+    public class NewUserQueryHandler : IRequestHandler<ValidateLoginQuery, Response<ValidateLoginResponse>>
     {
-        private readonly ILogger<LoginQueryHandler> _logger;
-        private readonly IReadCacheRepository _readCacheRepository;
+        private readonly ILogger<NewUserQueryHandler> _logger;
+        private readonly IWriteCacheRepository _writeCacheRepository;
 
-        public LoginQueryHandler(ILogger<LoginQueryHandler> logger,
-                                 IReadCacheRepository readCacheRepository)
+        public NewUserQueryHandler(ILogger<NewUserQueryHandler> logger,
+                                 IWriteCacheRepository writeCacheRepository)
         {
             _logger = logger;
-            _readCacheRepository = readCacheRepository;
+            _writeCacheRepository = writeCacheRepository;
 
         }
 
@@ -51,16 +51,14 @@ namespace RIPE.Application.QueryHandlers
             try
             {
                 var user = new UserDetails(request.Login, passwordHash);
-                var logins = await _readCacheRepository.GetUser();
+                await _writeCacheRepository.SetLogin(user);
 
-                var validLogin = logins.Select(x => x.Login = request.Login);
-
-                if (!validLogin.Any() || validLogin == null)
-                {
-                    return Response<ValidateLoginResponse>.Fail(new Error("GenericError",
-                   $"RequestId: {requestId} - Erro ao inserir dados de um novo usuário",
-                   StatusCodes.Status500InternalServerError));
-                }
+                //if (!sucessLogin)
+                //{
+                //    return Response<ValidateLoginResponse>.Fail(new Error("GenericError",
+                //   $"RequestId: {requestId} - Erro ao inserir dados de um novo usuário",
+                //   StatusCodes.Status500InternalServerError));
+                //}
 
                 response.sucess = true;
 

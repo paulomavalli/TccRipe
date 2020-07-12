@@ -1,11 +1,11 @@
 ﻿using Dapper;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using MySql.Data.MySqlClient;
 using RIPE.Application.Interfaces.Repository;
 using RIPE.CrossCutting.Options;
 using RIPE.Data.Statements;
 using RIPE.Domain.Domains;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

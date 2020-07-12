@@ -1,19 +1,19 @@
-﻿using RIPE.Application.Interfaces.Repository;
+﻿using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using NSubstitute;
+using NSubstitute.ExceptionExtensions;
+using RIPE.Application.Interfaces.Repository;
 using RIPE.Application.Queries;
 using RIPE.Application.QueryHandlers;
 using RIPE.Application.Responses;
 using RIPE.Domain;
+using RIPE.Domain.Domains.Questions;
 using RIPE.Tests.Fake;
-using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using NSubstitute;
-using NSubstitute.ExceptionExtensions;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-using RIPE.Domain.Domains.Questions;
 
 namespace RIPE.Tests.Application.QueryHandlers
 {
@@ -83,22 +83,10 @@ namespace RIPE.Tests.Application.QueryHandlers
         }
 
         [Theory]
-        [InlineData(Messages.InvalidCustomerId, "", "12345", 20000, 1000, 500)]
-        [InlineData(Messages.InvalidSecurityId, "123456789", "", 20000, 1000, 500)]
-        [InlineData(Messages.InvalidSecurityNetValue, "123456789", "12345", 0, 1000, 500)]
-        [InlineData(Messages.InvalidSecurityNetValue, "123456789", "12345", -20000, 1000, 500)]
-        [InlineData(Messages.InvalidSecurityQuantity, "123456789", "12345", 20000, 0, 500)]
-        [InlineData(Messages.InvalidSecurityQuantity, "123456789", "12345", 20000, -1, 500)]
-        [InlineData(Messages.InvalidWithdrawalValue, "123456789", "12345", 20000, 1000, 0)]
-        [InlineData(Messages.InvalidWithdrawalValue, "123456789", "12345", 20000, 1000, -1)]
-        public async Task ShouldReturnFail_AfterHandle_InvalidRequestParameters(string expected, string customerId, string securityId, decimal securityNetValue, decimal securityQuantity, decimal withdrawalValue)
+        [InlineData(Messages.InvalidCustomerId)]
+        public async Task ShouldReturnFail_AfterHandle_InvalidRequestParameters(string expected)
         {
             var checkBoxes = new List<TypeQuestions>();
-            new TypeQuestions(customerId);
-            new TypeQuestions(securityId);
-            new TypeQuestions(securityQuantity.ToString());
-            new TypeQuestions(securityNetValue.ToString());
-            new TypeQuestions(withdrawalValue.ToString());
 
             var request = new CollateralExceededByValueQuery(checkBoxes);
             Response<QuestionsResponse> response = await _handler.Handle(request, CancellationToken.None);

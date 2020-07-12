@@ -1,9 +1,9 @@
-﻿using RIPE.Application.Responses;
-using Easynvest.Ops;
+﻿using Easynvest.Ops;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using RIPE.Application.Responses;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;

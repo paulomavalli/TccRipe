@@ -1,14 +1,14 @@
-﻿using RIPE.Application.Interfaces.Repository;
-using RIPE.Application.Queries;
-using RIPE.Application.Responses;
-using RIPE.CrossCutting.Extensions;
-using RIPE.Domain;
-using Easynvest.Ops;
+﻿using Easynvest.Ops;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using RIPE.Application.Interfaces.Repository;
+using RIPE.Application.Queries;
+using RIPE.Application.Responses;
+using RIPE.Domain;
+using RIPE.Domain.Domains;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -35,19 +35,19 @@ namespace RIPE.Application.QueryHandlers
             {
                 return Response<ReportResponse>.Fail(Messages.InvalidCustomerId);
             }
-            
+
 
             var response = new ReportResponse();
 
             //var customerId = request.CustomerId;
-            
+
             //var customerHash = customerId.GenerateSha256Hash();
 
             try
             {
-                decimal teste = 0;
+                // decimal teste = 0;
                 var collateral = await _ripeRepository.GetQuestions();
-                if (collateral != null) teste = 1;
+                // if (collateral != null) teste = 1;
 
                 //var custodyQuantityUsedAsCollateral = collateral?.Sum(c => c.Quantity) ?? 0;
 
@@ -61,7 +61,15 @@ namespace RIPE.Application.QueryHandlers
 
                 //if (exceededQuantityInCollateral < 0)
                 //    response.ExceededQuantity = decimal.Round(exceededQuantityInCollateral, 2) * -1;
-                response.ExceededQuantity = teste;
+                var habits = new BestHabits
+                (
+                   new List<string> { "1", "2" }
+                );
+                response.NivelMaturidade = "2";
+                response.PorcentagemRespostasNegativas = "30";
+                response.PorcentagemRespostasNulas = "15";
+                response.PorcentagemRespostasPositivas = "55";
+                response.Recomendacoes = habits;
 
                 return Response<ReportResponse>.Ok(response);
 

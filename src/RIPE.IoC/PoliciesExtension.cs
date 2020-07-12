@@ -1,10 +1,10 @@
-﻿using RIPE.CrossCutting.Extensions;
-using RIPE.CrossCutting.Options;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Timeout;
+using RIPE.CrossCutting.Extensions;
+using RIPE.CrossCutting.Options;
 using System;
 using System.Net.Http;
 
