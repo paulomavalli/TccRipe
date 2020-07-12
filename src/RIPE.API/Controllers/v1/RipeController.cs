@@ -24,11 +24,17 @@ namespace RIPE.API.Controllers.v1
             _mediator = mediator;
         }
 
-        [HttpPost("login")]
-        [Authorize]
+        [HttpPost("createUser")]
+       // [Authorize]
         public async Task<ActionResult<Response>> NewUserPost([FromBody] LoginRequest userDetails)
         {
-            var request = new ValidateLoginQuery(userDetails.Login, userDetails.Password);
+            var request = new NewUserQuery(userDetails.Login,
+                                           userDetails.Password,
+                                           userDetails.UserName,
+                                           userDetails.FoneNumber,
+                                           userDetails.Office,
+                                           userDetails.Birth,
+                                           userDetails.CompanyName);
 
             var response = await _mediator.Send(request);
 
@@ -39,8 +45,8 @@ namespace RIPE.API.Controllers.v1
         }
 
         [HttpPost("login")]
-        [Authorize]
-        public async Task<ActionResult<Response>> LoginPost([FromBody] LoginRequest userDetails)
+       // [Authorize]
+        public async Task<ActionResult<Response>> LoginPost([FromBody] AuthenticationLoginRequest userDetails)
         {
             var request = new ValidateLoginQuery(userDetails.Login, userDetails.Password);
 
@@ -53,7 +59,7 @@ namespace RIPE.API.Controllers.v1
         }
 
         [HttpGet("questions")]
-        [Authorize]
+       // [Authorize]
         public async Task<ActionResult<QuestionsResponse>> GetQuestions(string validateUser)
         {
             var request = new SurveyQuery(validateUser);
@@ -67,10 +73,11 @@ namespace RIPE.API.Controllers.v1
         }
 
         [HttpGet("report")]
-        [Authorize]
-        public async Task<ActionResult<ReportResponse>> Report(AnswersSurveyRequest asnwers)
+       // [Authorize]
+      //  public async Task<ActionResult<ReportResponse>> Report([FromBody] AnswersSurveyRequest answers)
+        public async Task<ActionResult<ReportResponse>> Report(string QuantityPositiveAnswer,string QuantityNegativeAnswer,string QuantityNullableAnswer)
         {
-            var request = new ReportQuery(asnwers.QuantityPositiveAnswer,asnwers.QuantityNegativeAnswer,asnwers.QuantityNullableAnswer);
+            var request = new ReportQuery(QuantityPositiveAnswer,QuantityNegativeAnswer,QuantityNullableAnswer);
 
             var response = await _mediator.Send(request);
 
@@ -80,7 +87,7 @@ namespace RIPE.API.Controllers.v1
         }
 
         [HttpPost("feedback")]
-        [Authorize]
+       // [Authorize]
         public async Task<IActionResult> Feedback([FromBody] FeedbackRequest feedback)
         {
             var request = new FeedbackCommand(feedback.CustomerFeedback, feedback.Email);

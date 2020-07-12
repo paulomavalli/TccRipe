@@ -4,10 +4,10 @@
     {
         public Feedback(string email, string customerFeedback)
         {
-            CustomerFeedback = customerFeedback;
             Email = email;
+            CustomerFeedback = customerFeedback;
         }
-        public string Email { get; }
-        public string CustomerFeedback { get; }
+        public string Email { get; set; }
+        public string CustomerFeedback { get; set; }
     }
 }

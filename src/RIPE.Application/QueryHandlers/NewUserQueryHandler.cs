@@ -9,13 +9,14 @@ using RIPE.CrossCutting.Extensions;
 using RIPE.Domain;
 using RIPE.Domain.Domains;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace RIPE.Application.QueryHandlers
 {
-    public class NewUserQueryHandler : IRequestHandler<ValidateLoginQuery, Response<ValidateLoginResponse>>
+    public class NewUserQueryHandler : IRequestHandler<NewUserQuery, Response<ValidateLoginResponse>>
     {
         private readonly ILogger<NewUserQueryHandler> _logger;
         private readonly IWriteCacheRepository _writeCacheRepository;
@@ -28,7 +29,7 @@ namespace RIPE.Application.QueryHandlers
 
         }
 
-        public async Task<Response<ValidateLoginResponse>> Handle(ValidateLoginQuery request, CancellationToken cancellationToken)
+        public async Task<Response<ValidateLoginResponse>> Handle(NewUserQuery request, CancellationToken cancellationToken)
         {
             var response = new ValidateLoginResponse();
 
@@ -50,8 +51,15 @@ namespace RIPE.Application.QueryHandlers
 
             try
             {
-                var user = new UserDetails(request.Login, passwordHash);
-                await _writeCacheRepository.SetLogin(user);
+                var user = new UserDetails(request.Login, 
+                                           passwordHash,
+                                           request.UserName,
+                                           request.FoneNumber,
+                                           request.Office,
+                                           request.Birth,
+                                           request.CompanyName);
+                var listUser = new List<UserDetails> { user };
+                await _writeCacheRepository.SetLogin(listUser);
 
                 //if (!sucessLogin)
                 //{

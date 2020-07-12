@@ -49,15 +49,16 @@ namespace RIPE.Application.QueryHandlers
 
             try
             {
-                var user = new UserDetails(request.Login, passwordHash);
+                //var user = new UserDetails(request.Login, passwordHash);
                 var logins = await _readCacheRepository.GetUser();
 
                 var validLogin = logins.Select(x => x.Login = request.Login);
+                var validKey = logins.Select(x => x.PasswordHash = passwordHash);
 
-                if (!validLogin.Any() || validLogin == null)
+                if (!validLogin.Any() || validLogin == null || !validKey.Any() || validKey == null)
                 {
                     return Response<ValidateLoginResponse>.Fail(new Error("GenericError",
-                   $"RequestId: {requestId} - Erro ao inserir dados de um novo usuário",
+                   $"RequestId: {requestId} - Erro ao autenticar o login do usuário",
                    StatusCodes.Status500InternalServerError));
                 }
 

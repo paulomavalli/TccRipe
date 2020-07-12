@@ -28,7 +28,7 @@ namespace RIPE.API
         {
             services
                 .AddOptions(Configuration)
-                .AddJwtAuthentication(Configuration)
+               // .AddJwtAuthentication(Configuration)
                 .AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>()
                 .AddSwaggerGen(c => c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First()))
                 .AddApiVersioning(options =>

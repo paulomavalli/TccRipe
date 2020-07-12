@@ -33,15 +33,15 @@ namespace RIPE.Application.QueryHandlers
             {
                 return Response<ReportResponse>.Fail(Messages.InvalidRequest);
             }
-            if (request.QuantityPositiveAnswer < 0)
+            if (request.QuantityPositiveAnswer == null )
             {
                 return Response<ReportResponse>.Fail(Messages.InvalidCustomerId);
             }
-            if (request.QuantityNegativeAnswer < 0)
+            if (request.QuantityNegativeAnswer == null )
             {
                 return Response<ReportResponse>.Fail(Messages.InvalidCustomerId);
             }
-            if (request.QuantityNullableAnswer < 0)
+            if (request.QuantityNullableAnswer == null )
             {
                 return Response<ReportResponse>.Fail(Messages.InvalidCustomerId);
             }
@@ -49,16 +49,19 @@ namespace RIPE.Application.QueryHandlers
 
             var response = new ReportResponse();
             var habits = new BestHabits(new List<string>());
+            int quantityPositiveAnswer = Int32.Parse(request.QuantityPositiveAnswer);
+            int quantityNullableAnswer = Int32.Parse(request.QuantityNullableAnswer);
+            int quantityNegativeAnswer = Int32.Parse(request.QuantityNegativeAnswer);
 
             try
             {
-                decimal PerCentOkAsnwer = (decimal)0.714 * request.QuantityPositiveAnswer;
-                decimal PerCentNullableAsnwer = (decimal)0.714 * request.QuantityNullableAnswer;
-                decimal PerCentNegativeAsnwer = (decimal)0.714 * request.QuantityNegativeAnswer;
+                decimal PerCentOkAsnwer = (decimal)0.714 * quantityPositiveAnswer;
+                decimal PerCentNullableAsnwer = (decimal)0.714 * quantityNullableAnswer;
+                decimal PerCentNegativeAsnwer = (decimal)0.714 * quantityNegativeAnswer;
                 var logins = await _readCacheRepository.GetUser();
 
 
-                if (PerCentOkAsnwer > 89)
+                if (PerCentOkAsnwer >= 89)
                 {
                     habits = new BestHabits(new List<string> {
                                                                 "1",
@@ -67,7 +70,7 @@ namespace RIPE.Application.QueryHandlers
                     response.NivelMaturidade = "5";
                     response.Recomendacoes = habits;
                 }
-                else if (PerCentOkAsnwer >= 49)
+                else if (PerCentOkAsnwer >= 49 && PerCentOkAsnwer < 89)
                 {
                     habits = new BestHabits(new List<string> {
                                                                 "1",
@@ -76,7 +79,7 @@ namespace RIPE.Application.QueryHandlers
                     response.NivelMaturidade = "4";
                     response.Recomendacoes = habits;
                 }
-                else if (PerCentOkAsnwer > 14)
+                else if (PerCentOkAsnwer > 14 && PerCentOkAsnwer < 49)
                 {
                     habits = new BestHabits(new List<string> {
                                                                 "1",

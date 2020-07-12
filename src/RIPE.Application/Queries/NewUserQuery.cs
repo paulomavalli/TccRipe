@@ -1,16 +1,12 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using MediatR;
+using RIPE.Application.Responses;
 
-namespace RIPE.Application.Requests
+namespace RIPE.Application.Queries
 {
-    [ExcludeFromCodeCoverage]
-    public class LoginRequest
+    public class NewUserQuery : IRequest<Response<ValidateLoginResponse>>
     {
-        public LoginRequest()
-        {
-        }
-
-        public LoginRequest(string login, string password, string userName, 
-                            string foneNumber, string office, 
+        public NewUserQuery(string login, string password, string userName,
+                            string foneNumber, string office,
                             string birth, string companyName)
         {
             Login = login;
@@ -29,6 +25,6 @@ namespace RIPE.Application.Requests
         public string Office { get; set; }
         public string Birth { get; set; }
         public string CompanyName { get; set; }
-
     }
+
 }

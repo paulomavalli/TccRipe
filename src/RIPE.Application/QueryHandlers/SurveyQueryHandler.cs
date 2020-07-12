@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using RIPE.Application.Interfaces.Repository;
+using RIPE.Application.Interfaces.Repository.Cache;
 using RIPE.Application.Queries;
 using RIPE.Application.Responses;
 using RIPE.Domain;
@@ -18,11 +19,11 @@ namespace RIPE.Application.QueryHandlers
     public class SurveyQueryHandler : IRequestHandler<SurveyQuery, Response<QuestionsResponse>>
     {
         private readonly ILogger<SurveyQueryHandler> _logger;
-        private readonly IRipeRepository _ripeRepository;
-        public SurveyQueryHandler(ILogger<SurveyQueryHandler> logger, IRipeRepository ripeRepository)
+        private readonly IReadCacheRepository _readCacheRepository;
+        public SurveyQueryHandler(ILogger<SurveyQueryHandler> logger, IReadCacheRepository readCacheRepository)
         {
             _logger = logger;
-            _ripeRepository = ripeRepository;
+            _readCacheRepository = readCacheRepository;
         }
 
         public async Task<Response<QuestionsResponse>> Handle(SurveyQuery request, CancellationToken cancellationToken)
@@ -41,14 +42,15 @@ namespace RIPE.Application.QueryHandlers
 
             try
             {
-                var getQuestions2 = await _ripeRepository.GetQuestions();
-                if (getQuestions2 == null || !getQuestions2.Any())
+                var logins = await _readCacheRepository.GetUser();
+                var validLogin = logins.Select(x => x.Login = request.ValidateUser);
+
+                if (!validLogin.Any() || validLogin == null)
                 {
                     return Response<QuestionsResponse>.Fail(new Error("GenericError",
-                      $"RequestId: {requestId} - Erro ao obter questionário no banco",
-                      StatusCodes.Status204NoContent));
+                   $"RequestId: {requestId} - Erro ao autenticar usuário getQuestions",
+                   StatusCodes.Status500InternalServerError));
                 }
-                else getQuestions2 = null;
 
                 var getQuestions = new List<TypeQuestions>
                 {

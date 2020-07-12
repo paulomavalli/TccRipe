@@ -1,22 +1,20 @@
-﻿using RIPE.Domain.Domains.Questions;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace RIPE.Application.Requests
 {
     [ExcludeFromCodeCoverage]
     public class AnswersSurveyRequest
     {
-        public AnswersSurveyRequest(int quantityPositiveAnswer, int quantityNegativeAnswer, int quantityNullableAnswer)
+        public AnswersSurveyRequest(string quantityPositiveAnswer, string quantityNegativeAnswer, string quantityNullableAnswer)
         {
             QuantityPositiveAnswer = quantityPositiveAnswer;
             QuantityNegativeAnswer = quantityNegativeAnswer;
             QuantityNullableAnswer = quantityNullableAnswer;
         }
 
-        public int QuantityPositiveAnswer { get; }
-        public int QuantityNegativeAnswer { get; }
-        public int QuantityNullableAnswer { get; }
+        public string QuantityPositiveAnswer { get; }
+        public string QuantityNegativeAnswer { get; }
+        public string QuantityNullableAnswer { get; }
 
     }
 

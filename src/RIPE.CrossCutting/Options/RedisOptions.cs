@@ -11,6 +11,7 @@ namespace RIPE.CrossCutting.Options
         public string LoginCacheKey { get; set; }
         public string QuestionsCacheKey { get; set; }
         public string ReportCacheKey { get; set; }
-        public string CacheKey { get; set; }
+        public string UserCacheKey { get; set; }
+        public string FeedbackCacheKey { get; set; }
     }
 }

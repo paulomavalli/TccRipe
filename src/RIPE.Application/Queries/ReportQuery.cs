@@ -7,16 +7,16 @@ namespace RIPE.Application.Queries
 {
     public class ReportQuery : IRequest<Response<ReportResponse>>
     {
-        public ReportQuery(int quantityPositiveAnswer, int quantityNegativeAnswer, int quantityNullableAnswer)
+        public ReportQuery(string quantityPositiveAnswer, string quantityNegativeAnswer, string quantityNullableAnswer)
         {
             QuantityPositiveAnswer = quantityPositiveAnswer;
             QuantityNegativeAnswer = quantityNegativeAnswer;
             QuantityNullableAnswer = quantityNullableAnswer;
         }
 
-        public int QuantityPositiveAnswer { get; }
-        public int QuantityNegativeAnswer { get; }
-        public int QuantityNullableAnswer { get; }
+        public string QuantityPositiveAnswer { get; }
+        public string QuantityNegativeAnswer { get; }
+        public string QuantityNullableAnswer { get; }
 
     }
 }

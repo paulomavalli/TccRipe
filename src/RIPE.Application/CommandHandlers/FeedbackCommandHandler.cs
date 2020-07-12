@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using RIPE.Application.Command;
 using RIPE.Application.Interfaces.Repository;
+using RIPE.Application.Interfaces.Repository.Cache;
 using RIPE.Application.Responses;
 using RIPE.Domain.Domains.Feedback;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,17 +16,17 @@ namespace RIPE.Application.CommandHandlers
 {
     public class FeedbackCommandHandler : IRequestHandler<FeedbackCommand, Response>
     {
-        private readonly IRipeRepository _feedbackRepository;
+        private readonly IWriteCacheRepository _writeCacheRepository;
         private readonly ILogger<FeedbackCommandHandler> _logger;
 
         public FeedbackCommandHandler
         (
                 ILogger<FeedbackCommandHandler> logger,
-                IRipeRepository feedbackRepository
+                IWriteCacheRepository writeCacheRepository
         )
         {
             _logger = logger;
-            _feedbackRepository = feedbackRepository;
+            _writeCacheRepository = writeCacheRepository;
         }
 
 
@@ -46,7 +48,9 @@ namespace RIPE.Application.CommandHandlers
 
             try
             {
-                await _feedbackRepository.WriteFeedback(new Feedback(request.CustomerFeedback, request.Email));
+                var newFeedback = new Feedback(request.CustomerFeedback, request.Email);
+                var feedBack = new List<Feedback> { newFeedback };
+                await _writeCacheRepository.SetFeedBack(feedBack);
 
                 return Response.Ok();
             }

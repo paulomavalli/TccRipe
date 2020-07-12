@@ -10,6 +10,6 @@ namespace RIPE.Application.Interfaces.Repository.Cache
         Task<IEnumerable<TypeQuestions>> GetQuestions();
         Task<IEnumerable<TypeQuestions>> GetResults();
         Task<IEnumerable<BestHabits>> GetHabits();
-        Task<IEnumerable<UserDetails>> GetUser();
+        Task<IEnumerable<ValidateUser>> GetUser();
     }
 }

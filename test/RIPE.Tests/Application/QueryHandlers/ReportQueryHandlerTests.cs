@@ -35,10 +35,10 @@ namespace RIPE.Tests.Application.QueryHandlers
         [Fact]
         public async Task ShouldReturnSuccess_AfterHandle_CollateralsNull()
         {
-            _readCacheRepository.GetUser().Returns((IEnumerable<RIPE.Domain.Domains.UserDetails>)null);
+            _readCacheRepository.GetUser().Returns((IEnumerable<RIPE.Domain.Domains.ValidateUser>)null);
 
              
-            Response<ReportResponse> response = await _handler.Handle(new ReportQuery(10,20,70), CancellationToken.None);
+            Response<ReportResponse> response = await _handler.Handle(new ReportQuery("10","20","70"), CancellationToken.None);
 
             response.IsSuccess.Should().BeTrue();
             response.Value.NivelMaturidade.Should().Be("0");
@@ -47,10 +47,10 @@ namespace RIPE.Tests.Application.QueryHandlers
         [Fact]
         public async Task ShouldReturnSuccess_AfterHandle_CollateralsEmpty()
         {
-            _readCacheRepository.GetUser().Returns((new List<RIPE.Domain.Domains.UserDetails>()));
+            _readCacheRepository.GetUser().Returns((new List<RIPE.Domain.Domains.ValidateUser>()));
 
              
-            Response<ReportResponse> response = await _handler.Handle(new ReportQuery(10,20,70), CancellationToken.None);
+            Response<ReportResponse> response = await _handler.Handle(new ReportQuery("10","20","70"), CancellationToken.None);
 
             response.IsSuccess.Should().BeTrue();
             response.Value.NivelMaturidade.Should().Be("0");
@@ -62,16 +62,16 @@ namespace RIPE.Tests.Application.QueryHandlers
             //  const decimal securityQuantity = 10000.506M;
             // const decimal withdrawalQuantity = 6000.342M;
 
-            var collaterals = new List<UserDetails>
-            {
-                new UserDetails("1", "securityId"),
-                new UserDetails("2", "securityId2")
-            };
+            //var collaterals = new List<ValidateUser>
+            //{
+            //    new ValidateUser("1", "securityId"),
+            //    new UserDetails("2", "securityId2")
+            //};
 
-            _readCacheRepository.GetUser().Returns(collaterals);
+         //   _readCacheRepository.GetUser().Returns(collaterals);
 
              
-            Response<ReportResponse> response = await _handler.Handle(new ReportQuery(10,20,70), CancellationToken.None);
+            Response<ReportResponse> response = await _handler.Handle(new ReportQuery("10","20","70"), CancellationToken.None);
 
             response.IsSuccess.Should().BeTrue();
             response.Value.PorcentagemRespostasPositivas.Should().Be("55");
@@ -96,7 +96,7 @@ namespace RIPE.Tests.Application.QueryHandlers
         public async Task ShouldReturnFail_AfterHandle_InvalidRequestParameters() //, string customerId, string securityId, decimal securityQuantity, decimal withdrawalQuantity)
         {
              
-            var request = new ReportQuery(10,20,70);
+            var request = new ReportQuery("10","20","70");
             Response<ReportResponse> response = await _handler.Handle(request, CancellationToken.None);
 
             response.IsFailure.Should().BeTrue();
@@ -108,7 +108,7 @@ namespace RIPE.Tests.Application.QueryHandlers
         {
             _readCacheRepository.GetUser().Throws(new Exception());
              
-            Response<ReportResponse> response = await _handler.Handle(new ReportQuery(10,20,70), CancellationToken.None);
+            Response<ReportResponse> response = await _handler.Handle(new ReportQuery("10","20","70"), CancellationToken.None);
 
             response.IsFailure.Should().BeTrue();
         }
