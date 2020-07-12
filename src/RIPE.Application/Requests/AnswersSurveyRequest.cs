@@ -1,13 +1,13 @@
-﻿using MediatR;
-using RIPE.Application.Responses;
-using RIPE.Domain.Domains.Questions;
+﻿using RIPE.Domain.Domains.Questions;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
-namespace RIPE.Application.Queries
+namespace RIPE.Application.Requests
 {
-    public class ReportQuery : IRequest<Response<ReportResponse>>
+    [ExcludeFromCodeCoverage]
+    public class AnswersSurveyRequest
     {
-        public ReportQuery(int quantityPositiveAnswer, int quantityNegativeAnswer, int quantityNullableAnswer)
+        public AnswersSurveyRequest(int quantityPositiveAnswer, int quantityNegativeAnswer, int quantityNullableAnswer)
         {
             QuantityPositiveAnswer = quantityPositiveAnswer;
             QuantityNegativeAnswer = quantityNegativeAnswer;
@@ -19,4 +19,6 @@ namespace RIPE.Application.Queries
         public int QuantityNullableAnswer { get; }
 
     }
+
 }
+

@@ -68,9 +68,9 @@ namespace RIPE.API.Controllers.v1
 
         [HttpGet("report")]
         [Authorize]
-        public async Task<ActionResult<Response>> Report(QuestionsRequest TypesQuestions)
+        public async Task<ActionResult<ReportResponse>> Report(AnswersSurveyRequest asnwers)
         {
-            var request = new ReportQuery(TypesQuestions.TypesQuestions);
+            var request = new ReportQuery(asnwers.QuantityPositiveAnswer,asnwers.QuantityNegativeAnswer,asnwers.QuantityNullableAnswer);
 
             var response = await _mediator.Send(request);
 

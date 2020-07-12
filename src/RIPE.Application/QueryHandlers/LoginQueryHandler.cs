@@ -25,7 +25,6 @@ namespace RIPE.Application.QueryHandlers
         {
             _logger = logger;
             _readCacheRepository = readCacheRepository;
-
         }
 
         public async Task<Response<ValidateLoginResponse>> Handle(ValidateLoginQuery request, CancellationToken cancellationToken)

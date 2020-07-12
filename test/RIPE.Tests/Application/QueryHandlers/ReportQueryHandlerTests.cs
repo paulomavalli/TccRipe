@@ -3,10 +3,12 @@ using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using RIPE.Application.Interfaces.Repository;
+using RIPE.Application.Interfaces.Repository.Cache;
 using RIPE.Application.Queries;
 using RIPE.Application.QueryHandlers;
 using RIPE.Application.Responses;
 using RIPE.Domain;
+using RIPE.Domain.Domains;
 using RIPE.Domain.Domains.Questions;
 using RIPE.Tests.Fake;
 using System;
@@ -19,25 +21,24 @@ namespace RIPE.Tests.Application.QueryHandlers
 {
     public class ReportQueryHandlerTests
     {
-        private readonly IRipeRepository _collateralRepository;
+        private readonly IReadCacheRepository _readCacheRepository;
         private readonly ReportQueryHandler _handler;
 
         public ReportQueryHandlerTests()
         {
-            _collateralRepository = Substitute.For<IRipeRepository>();
+            _readCacheRepository = Substitute.For<IReadCacheRepository>();
             var logger = Substitute.For<ILogger<ReportQueryHandler>>();
 
-            _handler = new ReportQueryHandler(logger,
-                _collateralRepository);
+            _handler = new ReportQueryHandler(logger, _readCacheRepository);
         }
 
         [Fact]
         public async Task ShouldReturnSuccess_AfterHandle_CollateralsNull()
         {
-            _collateralRepository.GetCollateralPerSecurityId(Arg.Any<string>(), Arg.Any<string>()).Returns((IEnumerable<RIPE.Domain.Domains.Collateral>)null);
+            _readCacheRepository.GetUser().Returns((IEnumerable<RIPE.Domain.Domains.UserDetails>)null);
 
-            List<TypeQuestions> checkBoxes = new List<TypeQuestions>();
-            Response<ReportResponse> response = await _handler.Handle(new ReportQuery(checkBoxes), CancellationToken.None);
+             
+            Response<ReportResponse> response = await _handler.Handle(new ReportQuery(10,20,70), CancellationToken.None);
 
             response.IsSuccess.Should().BeTrue();
             response.Value.NivelMaturidade.Should().Be("0");
@@ -46,10 +47,10 @@ namespace RIPE.Tests.Application.QueryHandlers
         [Fact]
         public async Task ShouldReturnSuccess_AfterHandle_CollateralsEmpty()
         {
-            _collateralRepository.GetCollateralPerSecurityId(Arg.Any<string>(), Arg.Any<string>()).Returns(new List<RIPE.Domain.Domains.Collateral>());
+            _readCacheRepository.GetUser().Returns((new List<RIPE.Domain.Domains.UserDetails>()));
 
-            List<TypeQuestions> checkBoxes = new List<TypeQuestions>();
-            Response<ReportResponse> response = await _handler.Handle(new ReportQuery(checkBoxes), CancellationToken.None);
+             
+            Response<ReportResponse> response = await _handler.Handle(new ReportQuery(10,20,70), CancellationToken.None);
 
             response.IsSuccess.Should().BeTrue();
             response.Value.NivelMaturidade.Should().Be("0");
@@ -58,16 +59,19 @@ namespace RIPE.Tests.Application.QueryHandlers
         [Fact]
         public async Task ShouldReturnSuccess_AfterHandle_CollateralsLessThanWithdrawalQuantity()
         {
-            const string securityId = "12345";
             //  const decimal securityQuantity = 10000.506M;
             // const decimal withdrawalQuantity = 6000.342M;
-            const decimal quantityInCollateral = 5000.231M;
 
-            List<RIPE.Domain.Domains.Collateral> collaterals = CollateralFake.GetRealCollateralSameSecurityId(securityId, quantityInCollateral);
-            _collateralRepository.GetCollateralPerSecurityId(Arg.Any<string>(), Arg.Any<string>()).Returns(collaterals);
+            var collaterals = new List<UserDetails>
+            {
+                new UserDetails("1", "securityId"),
+                new UserDetails("2", "securityId2")
+            };
 
-            List<TypeQuestions> checkBoxes = new List<TypeQuestions>();
-            Response<ReportResponse> response = await _handler.Handle(new ReportQuery(checkBoxes), CancellationToken.None);
+            _readCacheRepository.GetUser().Returns(collaterals);
+
+             
+            Response<ReportResponse> response = await _handler.Handle(new ReportQuery(10,20,70), CancellationToken.None);
 
             response.IsSuccess.Should().BeTrue();
             response.Value.PorcentagemRespostasPositivas.Should().Be("55");
@@ -91,8 +95,8 @@ namespace RIPE.Tests.Application.QueryHandlers
         //[InlineData(Messages.InvalidWithdrawalQuantity, "123456789", "12345", 1000, -1)]
         public async Task ShouldReturnFail_AfterHandle_InvalidRequestParameters() //, string customerId, string securityId, decimal securityQuantity, decimal withdrawalQuantity)
         {
-            List<TypeQuestions> checkBoxes = new List<TypeQuestions>();
-            var request = new ReportQuery(checkBoxes);
+             
+            var request = new ReportQuery(10,20,70);
             Response<ReportResponse> response = await _handler.Handle(request, CancellationToken.None);
 
             response.IsFailure.Should().BeTrue();
@@ -102,9 +106,9 @@ namespace RIPE.Tests.Application.QueryHandlers
         [Fact]
         public async Task ShouldReturnFail_AfterHandle_ThrowException()
         {
-            _collateralRepository.GetCollateralPerSecurityId(Arg.Any<string>(), Arg.Any<string>()).Throws(new Exception());
-            List<TypeQuestions> checkBoxes = new List<TypeQuestions>();
-            Response<ReportResponse> response = await _handler.Handle(new ReportQuery(checkBoxes), CancellationToken.None);
+            _readCacheRepository.GetUser().Throws(new Exception());
+             
+            Response<ReportResponse> response = await _handler.Handle(new ReportQuery(10,20,70), CancellationToken.None);
 
             response.IsFailure.Should().BeTrue();
         }

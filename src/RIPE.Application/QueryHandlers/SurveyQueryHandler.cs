@@ -15,24 +15,24 @@ using System.Threading.Tasks;
 
 namespace RIPE.Application.QueryHandlers
 {
-    public class QuestionsQueryHandler : IRequestHandler<CollateralExceededByValueQuery, Response<QuestionsResponse>>
+    public class SurveyQueryHandler : IRequestHandler<SurveyQuery, Response<QuestionsResponse>>
     {
-        private readonly ILogger<QuestionsQueryHandler> _logger;
+        private readonly ILogger<SurveyQueryHandler> _logger;
         private readonly IRipeRepository _ripeRepository;
-        public QuestionsQueryHandler(ILogger<QuestionsQueryHandler> logger, IRipeRepository ripeRepository)
+        public SurveyQueryHandler(ILogger<SurveyQueryHandler> logger, IRipeRepository ripeRepository)
         {
             _logger = logger;
             _ripeRepository = ripeRepository;
         }
 
-        public async Task<Response<QuestionsResponse>> Handle(CollateralExceededByValueQuery request, CancellationToken cancellationToken)
+        public async Task<Response<QuestionsResponse>> Handle(SurveyQuery request, CancellationToken cancellationToken)
         {
             var requestId = Guid.NewGuid().ToString();
             if (request == null)
             {
                 return Response<QuestionsResponse>.Fail(Messages.InvalidRequest);
             }
-            if (request.CheckBoxes == null || !request.CheckBoxes.Any())
+            if (request.ValidateUser == null)
             {
                 return Response<QuestionsResponse>.Fail(Messages.InvalidCustomerId);
             }

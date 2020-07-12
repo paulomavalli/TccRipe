@@ -21,14 +21,14 @@ namespace RIPE.Tests.Application.QueryHandlers
     {
 
         private readonly IRipeRepository _collateralRepository;
-        private readonly QuestionsQueryHandler _handler;
+        private readonly SurveyQueryHandler _handler;
 
         public SurveyQueryTests()
         {
             _collateralRepository = Substitute.For<IRipeRepository>();
-            var logger = Substitute.For<ILogger<QuestionsQueryHandler>>();
+            var logger = Substitute.For<ILogger<SurveyQueryHandler>>();
 
-            _handler = new QuestionsQueryHandler(logger,
+            _handler = new SurveyQueryHandler(logger,
                 _collateralRepository);
         }
 
@@ -37,8 +37,8 @@ namespace RIPE.Tests.Application.QueryHandlers
         {
             _collateralRepository.GetCollateralPerSecurityId(Arg.Any<string>(), Arg.Any<string>()).Returns((IEnumerable<RIPE.Domain.Domains.Collateral>)null);
 
-            List<TypeQuestions> checkBoxes = new List<TypeQuestions>();
-            var response = await _handler.Handle(new CollateralExceededByValueQuery(checkBoxes), CancellationToken.None);
+            var checkBoxes = "emailValido";
+            var response = await _handler.Handle(new SurveyQuery(checkBoxes), CancellationToken.None);
 
             response.IsSuccess.Should().BeTrue();
             response.Value.survey.Should().NotBeEmpty();
@@ -49,8 +49,8 @@ namespace RIPE.Tests.Application.QueryHandlers
         {
             _collateralRepository.GetCollateralPerSecurityId(Arg.Any<string>(), Arg.Any<string>()).Returns(new List<RIPE.Domain.Domains.Collateral>());
 
-            List<TypeQuestions> checkBoxes = new List<TypeQuestions>();
-            Response<QuestionsResponse> response = await _handler.Handle(new CollateralExceededByValueQuery(checkBoxes), CancellationToken.None);
+            var checkBoxes = "emailValido";
+            Response<QuestionsResponse> response = await _handler.Handle(new SurveyQuery(checkBoxes), CancellationToken.None);
 
             response.IsSuccess.Should().BeTrue();
             response.Value.survey.Should().NotBeEmpty();
@@ -65,9 +65,9 @@ namespace RIPE.Tests.Application.QueryHandlers
             List<RIPE.Domain.Domains.Collateral> collaterals = CollateralFake.GetRealCollateralSameSecurityId(securityId, quantityInCollateral);
             _collateralRepository.GetCollateralPerSecurityId(Arg.Any<string>(), Arg.Any<string>()).Returns(collaterals);
 
-            List<TypeQuestions> checkBoxes = new List<TypeQuestions>();
+            var checkBoxes = "emailValido";
 
-            Response<QuestionsResponse> response = await _handler.Handle(new CollateralExceededByValueQuery(checkBoxes), CancellationToken.None);
+            Response<QuestionsResponse> response = await _handler.Handle(new SurveyQuery(checkBoxes), CancellationToken.None);
 
             response.IsSuccess.Should().BeTrue();
             response.Value.survey.Should().NotBeEmpty();
@@ -76,7 +76,7 @@ namespace RIPE.Tests.Application.QueryHandlers
         [Fact]
         public async Task ShouldReturnFail_AfterHandle_WithEmptyRequest()
         {
-            Response<QuestionsResponse> response = await _handler.Handle((CollateralExceededByValueQuery)null, CancellationToken.None);
+            Response<QuestionsResponse> response = await _handler.Handle((SurveyQuery)null, CancellationToken.None);
 
             response.IsFailure.Should().BeTrue();
             response.Messages.Contains(Messages.InvalidRequest).Should().BeTrue();
@@ -86,9 +86,9 @@ namespace RIPE.Tests.Application.QueryHandlers
         [InlineData(Messages.InvalidCustomerId)]
         public async Task ShouldReturnFail_AfterHandle_InvalidRequestParameters(string expected)
         {
-            var checkBoxes = new List<TypeQuestions>();
+            var checkBoxes = "EMAIL";
 
-            var request = new CollateralExceededByValueQuery(checkBoxes);
+            var request = new SurveyQuery(checkBoxes);
             Response<QuestionsResponse> response = await _handler.Handle(request, CancellationToken.None);
 
             response.IsFailure.Should().BeTrue();
@@ -100,9 +100,9 @@ namespace RIPE.Tests.Application.QueryHandlers
         {
             _collateralRepository.GetCollateralPerSecurityId(Arg.Any<string>(), Arg.Any<string>()).Throws(new Exception());
 
-            List<TypeQuestions> checkBoxes = new List<TypeQuestions>();
+            var checkBoxes = "emailValido";
 
-            var response = await _handler.Handle(new CollateralExceededByValueQuery(checkBoxes), CancellationToken.None);
+            var response = await _handler.Handle(new SurveyQuery(checkBoxes), CancellationToken.None);
 
             response.IsFailure.Should().BeTrue();
         }
