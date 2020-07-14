@@ -52,8 +52,8 @@ namespace RIPE.Application.QueryHandlers
                 //var user = new UserDetails(request.Login, passwordHash);
                 var logins = await _readCacheRepository.GetUser();
 
-                var validLogin = logins.Select(x => x.Login = request.Login);
-                var validKey = logins.Select(x => x.PasswordHash = passwordHash);
+                var validLogin = logins.Where(x =>x.Login == request.Login);
+                var validKey = logins.Where(x => x.PasswordHash == passwordHash);
 
                 if (!validLogin.Any() || validLogin == null || !validKey.Any() || validKey == null)
                 {

@@ -26,9 +26,18 @@ namespace RIPE.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            //readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
             services
                 .AddOptions(Configuration)
-               // .AddJwtAuthentication(Configuration)
+                //.AddCors(options =>
+                //{
+                //    options.AddPolicy(name: MyAllowSpecificOrigins,
+                //                      builder =>
+                //                      {
+                //                          builder.WithOrigins("http://example.com",
+                //                                              "http://www.contoso.com");
+                //                      });
+                //})
                 .AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>()
                 .AddSwaggerGen(c => c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First()))
                 .AddApiVersioning(options =>
@@ -59,14 +68,14 @@ namespace RIPE.API
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.UseHealthChecks();
             });
 
-            if (!env.IsProduction())
+           // if (!env.IsProduction())
                 app
                     .UseSwagger(c =>
                     {
@@ -75,7 +84,7 @@ namespace RIPE.API
                             apiDoc.Servers = new List<OpenApiServer>
                             {
                                 new OpenApiServer {Url = $"{httpReq.Scheme}://{httpReq.Host.Value}", Description = "Development"},
-                                new OpenApiServer {Url = $"{httpReq.Scheme}://{httpReq.Host.Value}/Collateral", Description = "Kubernetes"}
+                                //new OpenApiServer {Url = $"{httpReq.Scheme}://{httpReq.Host.Value}/Collateral", Description = "Kubernetes"}
                             };
                         });
                     })
